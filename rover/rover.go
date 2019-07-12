@@ -29,6 +29,7 @@ type Rover struct {
 // command will be validated as whole
 // return error if any command is not recognized
 func (r *Rover) Move(cmd string) error {
+	return nil
 }
 
 // actual move

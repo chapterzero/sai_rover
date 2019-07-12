@@ -9,18 +9,28 @@ const (
 
 type Cardinal int
 
-func (c *Cardinal) RotateLeft() {
+func RotateLeft(c Cardinal) Cardinal {
 	switch c {
 	case North:
-		c = West
+		return West
 	case East:
-		c = North
+		return North
 	case South:
-		c = East
-	case West:
-		c = South
+		return East
+	default:
+		return South
 	}
 }
 
-func (c *Cardinal) RotateRight() {
+func RotateRight(c Cardinal) Cardinal {
+	switch c {
+	case North:
+		return East
+	case East:
+		return South
+	case South:
+		return West
+	default:
+		return North
+	}
 }

@@ -31,4 +31,51 @@ func TestCardinalRotateLeft(t *testing.T) {
 			expected: South,
 		},
 	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			actual := RotateLeft(tc.from)
+			if actual != tc.expected {
+				t.Errorf("Expected %d got %d", tc.expected, actual)
+			}
+		})
+	}
+}
+
+func TestCardinalRotateRight(t *testing.T) {
+	testCases := []struct {
+		name     string
+		from     Cardinal
+		expected Cardinal
+	}{
+		{
+			name:     "Rotate right from north",
+			from:     North,
+			expected: East,
+		},
+		{
+			name:     "Rotate right from east",
+			from:     East,
+			expected: South,
+		},
+		{
+			name:     "Rotate right from south",
+			from:     South,
+			expected: West,
+		},
+		{
+			name:     "Rotate right from west",
+			from:     West,
+			expected: North,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			actual := RotateRight(tc.from)
+			if actual != tc.expected {
+				t.Errorf("Expected %d got %d", tc.expected, actual)
+			}
+		})
+	}
 }

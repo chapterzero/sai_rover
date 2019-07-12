@@ -14,7 +14,7 @@ type testCase struct {
 }
 
 func TestRoverSingleMoveCmd(t *testing.T) {
-	testCases := []testCase{
+	_ = []testCase{
 		testCase{
 			name:       "Test single move facing north",
 			r:          New(1, 1, 3, 3, North),

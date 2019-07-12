@@ -9,20 +9,41 @@ const (
 
 type Cardinal int
 
-func RotateLeft(c Cardinal) Cardinal {
+// TODO Test
+// calculate x and y increments
+// based on cardinality
+func (c Cardinal) TranslateMoveToXY() (int, int) {
+	x, y := 0, 0
 	switch c {
 	case North:
-		return West
+		y = 1
 	case East:
-		return North
+		x = 1
 	case South:
-		return East
-	default:
-		return South
+		y = -1
+	case West:
+		x = -1
 	}
+
+	return x, y
 }
 
-func RotateRight(c Cardinal) Cardinal {
+func (c Cardinal) RotateLeft() Cardinal {
+	switch c {
+	case North:
+		return West
+	case East:
+		return North
+	case South:
+		return East
+	case West:
+		return South
+	}
+
+	return c
+}
+
+func (c Cardinal) RotateRight() Cardinal {
 	switch c {
 	case North:
 		return East
@@ -30,7 +51,24 @@ func RotateRight(c Cardinal) Cardinal {
 		return South
 	case South:
 		return West
-	default:
+	case West:
 		return North
 	}
+
+	return c
+}
+
+// TODO: Test
+func (c Cardinal) Str() string {
+	switch c {
+	case North:
+		return "N"
+	case East:
+		return "E"
+	case South:
+		return "S"
+	case West:
+		return "W"
+	}
+	return ""
 }

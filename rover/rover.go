@@ -1,5 +1,9 @@
 package rover
 
+import (
+	"fmt"
+)
+
 func New(
 	start_x int,
 	start_y int,
@@ -26,9 +30,24 @@ type Rover struct {
 
 // move the rover using command
 // ex: LMLLMRMLM
-// command will be validated as whole
-// return error if any command is not recognized
+// command will be validated as whole (not executing partially)
+// return error if command is not recognized
 func (r *Rover) Move(cmd string) error {
+	if !isValidCmd(cmd) {
+		return fmt.Errorf("%s is invalid command", cmd)
+	}
+
+	for _, c := range cmd {
+		switch c {
+		case 'M':
+			r.move(r.c.TranslateMoveToXY())
+		case 'L':
+			r.c = r.c.RotateLeft()
+		case 'R':
+			r.c = r.c.RotateRight()
+		}
+	}
+
 	return nil
 }
 
@@ -52,6 +71,6 @@ func (r *Rover) move(x, y int) {
 	}
 }
 
-func (r *Rover) Pos() (int, int) {
-	return r.x, r.y
+func (r *Rover) Pos() (int, int, Cardinal) {
+	return r.x, r.y, r.c
 }

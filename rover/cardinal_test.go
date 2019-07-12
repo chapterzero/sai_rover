@@ -34,7 +34,7 @@ func TestCardinalRotateLeft(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			actual := RotateLeft(tc.from)
+			actual := tc.from.RotateLeft()
 			if actual != tc.expected {
 				t.Errorf("Expected %d got %d", tc.expected, actual)
 			}
@@ -72,7 +72,7 @@ func TestCardinalRotateRight(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			actual := RotateRight(tc.from)
+			actual := tc.from.RotateRight()
 			if actual != tc.expected {
 				t.Errorf("Expected %d got %d", tc.expected, actual)
 			}

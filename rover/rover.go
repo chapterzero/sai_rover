@@ -62,6 +62,7 @@ func (r *Rover) move(x, y int) {
 	r.x += x
 	r.y += y
 
+	// boundary checking
 	if r.x > r.max_x {
 		r.x = r.max_x
 	}

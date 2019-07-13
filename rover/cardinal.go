@@ -68,5 +68,6 @@ func (c Cardinal) Str() string {
 	case West:
 		return "W"
 	}
+
 	return ""
 }

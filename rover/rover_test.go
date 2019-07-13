@@ -76,6 +76,160 @@ func TestRoverSingleMoveCmd(t *testing.T) {
 	runTest(t, testCases)
 }
 
+func TestRoverRotateAndMoveCmd(t *testing.T) {
+	testCases := []testCase{
+		testCase{
+			name: "From north rotate left and move",
+			r: &Rover{
+				x:     1,
+				y:     1,
+				max_x: 3,
+				max_y: 3,
+				c:     North,
+			},
+			command:    "LM",
+			expected_x: 0,
+			expected_y: 1,
+			expected_c: West,
+		},
+		testCase{
+			name: "From East rotate right and move",
+			r: &Rover{
+				x:     1,
+				y:     1,
+				max_x: 3,
+				max_y: 3,
+				c:     East,
+			},
+			command:    "RM",
+			expected_x: 1,
+			expected_y: 0,
+			expected_c: South,
+		},
+		testCase{
+			name: "From South rotate left twice and move",
+			r: &Rover{
+				x:     1,
+				y:     1,
+				max_x: 3,
+				max_y: 3,
+				c:     South,
+			},
+			command:    "LLM",
+			expected_x: 1,
+			expected_y: 2,
+			expected_c: North,
+		},
+		testCase{
+			name: "From West, rotate left, rotate right x2 and move",
+			r: &Rover{
+				x:     1,
+				y:     1,
+				max_x: 3,
+				max_y: 3,
+				c:     West,
+			},
+			command:    "LRRM",
+			expected_x: 1,
+			expected_y: 2,
+			expected_c: North,
+		},
+		testCase{
+			name: "From east, rotate right, move, rotate right",
+			r: &Rover{
+				x:     1,
+				y:     1,
+				max_x: 3,
+				max_y: 3,
+				c:     East,
+			},
+			command:    "RMR",
+			expected_x: 1,
+			expected_y: 0,
+			expected_c: West,
+		},
+		testCase{
+			name: "From North, rotate left, move, rotate right move",
+			r: &Rover{
+				x:     1,
+				y:     1,
+				max_x: 3,
+				max_y: 3,
+				c:     North,
+			},
+			command:    "LMRM",
+			expected_x: 0,
+			expected_y: 2,
+			expected_c: North,
+		},
+	}
+
+	runTest(t, testCases)
+}
+
+func TestRoverMoveOutsideBoundary(t *testing.T) {
+	testCases := []testCase{
+		testCase{
+			name: "Hit South Boundary",
+			r: &Rover{
+				x:     1,
+				y:     1,
+				max_x: 2,
+				max_y: 2,
+				c:     South,
+			},
+			command:    "MM",
+			expected_x: 1,
+			expected_y: 0,
+			expected_c: South,
+		},
+		testCase{
+			name: "Rotate, move then Hit East Boundary",
+			r: &Rover{
+				x:     1,
+				y:     1,
+				max_x: 2,
+				max_y: 2,
+				c:     North,
+			},
+			command:    "RMMM",
+			expected_x: 2,
+			expected_y: 1,
+			expected_c: East,
+		},
+		testCase{
+			name: "Rotate and move after hit North boundary",
+			r: &Rover{
+				x:     1,
+				y:     1,
+				max_x: 2,
+				max_y: 2,
+				c:     East,
+			},
+			command:    "LMMMLM",
+			expected_x: 0,
+			expected_y: 2,
+			expected_c: West,
+		},
+		testCase{
+			name: "Reverse after hit west boundary",
+			r: &Rover{
+				x:     1,
+				y:     1,
+				max_x: 2,
+				max_y: 2,
+				c:     North,
+			},
+			command:    "LMMMMRRM",
+			expected_x: 1,
+			expected_y: 1,
+			expected_c: East,
+		},
+	}
+
+	runTest(t, testCases)
+}
+
 func runTest(t *testing.T, testCases []testCase) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {

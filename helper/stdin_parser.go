@@ -9,26 +9,26 @@ import (
 )
 
 func ParseMaxCoord(in string) (int, int, error) {
-	max_s := strings.Split(in, " ")
-	if len(max_s) != 2 {
+	maxS := strings.Split(in, " ")
+	if len(maxS) != 2 {
 		return 0, 0, errors.New("Wrong format")
 	}
 
-	max_x, err := strconv.Atoi(max_s[0])
+	maxX, err := strconv.Atoi(maxS[0])
 	if err != nil {
 		return 0, 0, err
 	}
 
-	max_y, err := strconv.Atoi(max_s[1])
+	maxY, err := strconv.Atoi(maxS[1])
 	if err != nil {
 		return 0, 0, err
 	}
 
-	if max_x < 0 || max_y < 0 {
+	if maxX < 0 || maxY < 0 {
 		return 0, 0, errors.New("Input must be positive integer")
 	}
 
-	return max_x, max_y, nil
+	return maxX, maxY, nil
 }
 
 func ParseInitialPos(in string) (int, int, rover.Cardinal, error) {

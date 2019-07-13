@@ -16,32 +16,56 @@ type testCase struct {
 func TestRoverSingleMoveCmd(t *testing.T) {
 	testCases := []testCase{
 		testCase{
-			name:       "Test single move facing north",
-			r:          New(1, 1, 3, 3, North),
+			name: "Test single move facing north",
+			r: &Rover{
+				x:     1,
+				y:     1,
+				max_x: 3,
+				max_y: 3,
+				c:     North,
+			},
 			command:    "M",
 			expected_x: 1,
 			expected_y: 2,
 			expected_c: North,
 		},
 		testCase{
-			name:       "Test single move facing east",
-			r:          New(1, 1, 3, 3, East),
+			name: "Test single move facing east",
+			r: &Rover{
+				x:     1,
+				y:     1,
+				max_x: 3,
+				max_y: 3,
+				c:     East,
+			},
 			command:    "M",
 			expected_x: 2,
 			expected_y: 1,
 			expected_c: East,
 		},
 		testCase{
-			name:       "Test single move facing south",
-			r:          New(1, 1, 3, 3, South),
+			name: "Test single move facing south",
+			r: &Rover{
+				x:     1,
+				y:     1,
+				max_x: 3,
+				max_y: 3,
+				c:     South,
+			},
 			command:    "M",
 			expected_x: 1,
 			expected_y: 0,
 			expected_c: South,
 		},
 		testCase{
-			name:       "Test single move facing west",
-			r:          New(1, 1, 3, 3, West),
+			name: "Test single move facing west",
+			r: &Rover{
+				x:     1,
+				y:     1,
+				max_x: 3,
+				max_y: 3,
+				c:     West,
+			},
 			command:    "M",
 			expected_x: 0,
 			expected_y: 1,
@@ -73,8 +97,72 @@ func runTest(t *testing.T, testCases []testCase) {
 	}
 }
 
+func TestNewRoverInitialOutsideOfBoundary(t *testing.T) {
+	testCases := []struct {
+		name    string
+		start_x int
+		start_y int
+		max_x   int
+		max_y   int
+	}{
+		{
+			name:    "X Outside of max x",
+			start_x: 4,
+			start_y: 3,
+			max_x:   3,
+			max_y:   3,
+		},
+		{
+			name:    "Negative x",
+			start_x: -1,
+			start_y: 3,
+			max_x:   3,
+			max_y:   3,
+		},
+		{
+			name:    "Y Outside of max y",
+			start_x: 3,
+			start_y: 4,
+			max_x:   3,
+			max_y:   3,
+		},
+		{
+			name:    "Negative y",
+			start_x: 3,
+			start_y: -1,
+			max_x:   3,
+			max_y:   3,
+		},
+		{
+			name:    "X and Y outside of max x and y",
+			start_x: 4,
+			start_y: 4,
+			max_x:   3,
+			max_y:   3,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			r, err := New(tc.start_x, tc.start_y, tc.max_x, tc.max_y, North)
+			if r != nil {
+				t.Errorf("Expected rover is not created, got non nil")
+			}
+
+			if err == nil {
+				t.Errorf("Expected error is not nil, got nil")
+				return
+			}
+
+			if err.Error() != "Invalid rover parameter" {
+				t.Errorf("Expected error message '%s' got '%s'", "Invalid rover parameter", err.Error())
+			}
+		})
+	}
+}
+
 func TestRoverInvalidMove(t *testing.T) {
-	r := New(1, 1, 3, 3, North)
+	r, _ := New(1, 1, 3, 3, North)
 	err := r.Move("MMXX")
 	if err == nil {
 		t.Errorf("Expected error but got nil")

@@ -4,20 +4,26 @@ import (
 	"fmt"
 )
 
+// Create new rover based on initial settings
+// initial position must be valid: inside boundary
 func New(
 	start_x int,
 	start_y int,
 	max_x int,
 	max_y int,
 	start_cardinal Cardinal,
-) *Rover {
+) (*Rover, error) {
+	if start_x > max_x || start_y > max_y || start_x < 0 || start_y < 0 {
+		return nil, fmt.Errorf("Invalid rover parameter")
+	}
+
 	return &Rover{
 		x:     start_x,
 		y:     start_y,
 		max_x: max_x,
 		max_y: max_y,
 		c:     start_cardinal,
-	}
+	}, nil
 }
 
 type Rover struct {

@@ -9,7 +9,6 @@ const (
 
 type Cardinal int
 
-// TODO Test
 // calculate x and y increments
 // based on cardinality
 func (c Cardinal) TranslateMoveToXY() (int, int) {
@@ -58,7 +57,6 @@ func (c Cardinal) RotateRight() Cardinal {
 	return c
 }
 
-// TODO: Test
 func (c Cardinal) Str() string {
 	switch c {
 	case North:

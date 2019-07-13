@@ -308,8 +308,8 @@ func TestNewRoverInitialOutsideOfBoundary(t *testing.T) {
 				return
 			}
 
-			if err.Error() != "Invalid rover parameter" {
-				t.Errorf("Expected error message '%s' got '%s'", "Invalid rover parameter", err.Error())
+			if err.Error() != "Invalid rover parameter: outside of boundary" {
+				t.Errorf("Expected error message '%s' got '%s'", "Invalid rover parameter: outside of boundary", err.Error())
 			}
 		})
 	}

@@ -1,8 +1,69 @@
 package rover
 
 import (
+	"fmt"
 	"testing"
 )
+
+func TestNewCardinalFromStr(t *testing.T) {
+	testCases := []struct {
+		name          string
+		input         string
+		expected      Cardinal
+		expectedError error
+	}{
+		{
+			name:          "North",
+			input:         "N",
+			expected:      North,
+			expectedError: nil,
+		},
+		{
+			name:          "East",
+			input:         "E",
+			expected:      East,
+			expectedError: nil,
+		},
+		{
+			name:          "South",
+			input:         "S",
+			expected:      South,
+			expectedError: nil,
+		},
+		{
+			name:          "West",
+			input:         "W",
+			expected:      West,
+			expectedError: nil,
+		},
+		{
+			name:          "Invalid input",
+			input:         "X",
+			expected:      0,
+			expectedError: fmt.Errorf("X is not valid cardinal"),
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			act_c, err := NewCardinal(tc.input)
+			if tc.expectedError == nil {
+				if err != nil {
+					t.Errorf("Expected no error returned, got %v", err)
+				}
+
+				if act_c != tc.expected {
+					t.Errorf("Expected %s got %s", tc.expected.Str(), act_c.Str())
+				}
+			} else {
+				if err.Error() != tc.expectedError.Error() {
+					t.Errorf("Expected '%v' got '%v'", tc.expectedError, err)
+					return
+				}
+			}
+		})
+	}
+}
 
 func TestTranslateMoveToXY(t *testing.T) {
 	testCases := []struct {

@@ -1,11 +1,30 @@
 package rover
 
+import (
+	"fmt"
+)
+
 const (
 	North Cardinal = iota
 	East
 	South
 	West
 )
+
+func NewCardinal(s string) (Cardinal, error) {
+	switch s {
+	case "N":
+		return North, nil
+	case "E":
+		return East, nil
+	case "S":
+		return South, nil
+	case "W":
+		return West, nil
+	}
+
+	return Cardinal(-1), fmt.Errorf("%s is not valid cardinal", s)
+}
 
 type Cardinal int
 

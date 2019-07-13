@@ -14,7 +14,7 @@ func New(
 	start_cardinal Cardinal,
 ) (*Rover, error) {
 	if start_x > max_x || start_y > max_y || start_x < 0 || start_y < 0 {
-		return nil, fmt.Errorf("Invalid rover parameter")
+		return nil, fmt.Errorf("Invalid rover parameter: outside of boundary")
 	}
 
 	return &Rover{
